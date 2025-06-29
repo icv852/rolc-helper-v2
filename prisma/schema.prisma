@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -9,4 +6,47 @@ generator client {
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
+}
+
+model Dlc {
+  name String @id
+  Map  Map[]
+  Item Item[]
+  Task Task[]
+}
+
+model Map {
+  name    String @id
+  rank    Int
+  maxLv   Int
+  dlc     Dlc    @relation(fields: [dlcName], references: [name])
+  dlcName String
+  Task    Task[]
+}
+
+model Item {
+  name    String @id
+  dlc     Dlc    @relation(fields: [dlcName], references: [name])
+  copper  Int
+  silver  Int
+  gold    Int
+  dlcName String
+  Task    Task[]
+}
+
+model Task {
+  name       String  @id
+  map        Map     @relation(fields: [mapName], references: [name])
+  dlc        Dlc     @relation(fields: [dlcName], references: [name])
+  reward     Item    @relation(fields: [itemName], references: [name])
+  day        Boolean
+  dayS       Boolean
+  evening    Boolean
+  eveningS   Boolean
+  night      Boolean
+  nightS     Boolean
+  difficulty String
+  mapName    String
+  dlcName    String
+  itemName   String
 }

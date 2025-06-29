@@ -1,11 +1,13 @@
 import logger from "./utils/logger"
-// import { PrismaClient } from "../generated/prisma"
+import { PrismaClient } from "../generated/prisma"
 import createKoaApp from "./app"
 import http, { Server } from "http"
 // import config from "./utils/config"
 import { formatErrorLog } from "./utils/errors"
+// import { PrismaClient } from "@prisma/client"
 // import UserRepository from "./repositories/user"
 // import AuthService from "./service"
+import seed from "./utils/seed"
 
 let server: Server
 
@@ -34,9 +36,11 @@ const gracefulShutdown = (): void => {
     }
 }
 
-const main = (): void => {
+const main = async (): Promise<void> => {
     try {
-        // const prisma = new PrismaClient()
+        const prisma = new PrismaClient()
+        await seed(prisma)
+
         // const userRepository = new UserRepository(prisma)
         // const authService = new AuthService(userRepository)
         // const app = createKoaApp(authService)
