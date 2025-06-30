@@ -41,10 +41,7 @@ const main = async (): Promise<void> => {
         const prisma = new PrismaClient()
         await seed(prisma)
 
-        // const userRepository = new UserRepository(prisma)
-        // const authService = new AuthService(userRepository)
-        // const app = createKoaApp(authService)
-        const app = createKoaApp()
+        const app = createKoaApp(prisma)
         server = http.createServer(app.callback())
 
         server.listen(PORT, () => {
