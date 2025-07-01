@@ -50,4 +50,11 @@ router.get("/weapons", async(ctx: Context) => await handleHttpRequest(ctx, ctx.r
     })
 }))
 
+router.get("/rings", async(ctx: Context) => await handleHttpRequest(ctx, ctx.request.body, z.object({}), () => {
+    return Effect.tryPromise({
+        try: () => ctx.db.ring.findMany(),
+        catch: e => new DatabaseError(`Failed to fetch rings: ${e}`)
+    })
+}))
+
 export default router

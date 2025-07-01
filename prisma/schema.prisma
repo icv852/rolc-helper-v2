@@ -71,3 +71,21 @@ model Weapon {
   base         String
   type         String
 }
+
+model Ring {
+  name  String  @id
+  rank  Int
+  rare  String
+  level Int
+  phyAtk       Int
+  magAtk       Int
+  crit         String
+  skill1       String
+  skill2       String
+  skill3       String
+  skill4       String
+  skill5       String
+  skill6       String
+  rawMaterials String
+  base         String
+}
