@@ -50,3 +50,24 @@ model Task {
   dlcName    String
   itemName   String
 }
+
+model Weapon {
+  name         String  @id
+  rank         Int
+  rare         String
+  attribute    String
+  leftHand     Boolean
+  level        Int
+  phyAtk       Int
+  magAtk       Int
+  crit         String
+  skill1       String
+  skill2       String
+  skill3       String
+  skill4       String
+  skill5       String
+  skill6       String
+  rawMaterials String
+  base         String
+  type         String
+}

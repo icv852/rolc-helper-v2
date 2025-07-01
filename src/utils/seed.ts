@@ -77,7 +77,37 @@ export default async function seed(prisma: PrismaClient): Promise<void> {
     }
     console.log('Item data imported.');
 
-    // 4. Import Task entries from task.csv
+    // 4. Import Weapon entries from "weapon.csv"
+    const weaponRows = await readCSV('data/weapon.csv')
+    for (const row of weaponRows) {
+      await prisma.weapon.upsert({
+        where: { name: trimValue(row.name) },
+        create: {
+          name: trimValue(row.name),
+          rank: parseInt(row.rank, 10),
+          rare: row.rare,
+          attribute: row.attribute,
+          leftHand: parseBoolean(row.leftHand),
+          level: parseInt(row.level),
+          phyAtk: parseInt(row.phyAtk),
+          magAtk: parseInt(row.magAtk),
+          crit: row.crit,
+          skill1: row.skill1,
+          skill2: row.skill2,
+          skill3: row.skill3,
+          skill4: row.skill4,
+          skill5: row.skill5,
+          skill6: row.skill6,
+          rawMaterials: row.rawMaterials,
+          base: row.base,
+          type: row.type
+        },
+        update: {}
+      })
+    }
+    console.log('Weapon data imported.');
+
+    // 5. Import Task entries from task.csv
     // Note: The CSV file header uses "diffculty" for the difficulty column.
     const taskRows = await readCSV('data/task.csv');
     for (const row of taskRows) {

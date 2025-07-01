@@ -43,4 +43,11 @@ router.get("/tasks", async(ctx: Context) => await handleHttpRequest(ctx, ctx.req
         })
 }))
 
+router.get("/weapons", async(ctx: Context) => await handleHttpRequest(ctx, ctx.request.body, z.object({}), () => {
+    return Effect.tryPromise({
+        try: () => ctx.db.weapon.findMany(),
+        catch: e => new DatabaseError(`Failed to fetch weapons: ${e}`)
+    })
+}))
+
 export default router
