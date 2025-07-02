@@ -11,7 +11,6 @@ datasource db {
 model Dlc {
   name String @id
   Map  Map[]
-  Item Item[]
   Task Task[]
 }
 
@@ -25,13 +24,17 @@ model Map {
 }
 
 model Item {
-  name    String @id
-  dlc     Dlc    @relation(fields: [dlcName], references: [name])
-  copper  Int
-  silver  Int
-  gold    Int
-  dlcName String
-  Task    Task[]
+  name     String @id
+  copper   Int
+  silver   Int
+  gold     Int
+  shadow   Int
+  huang    Int
+  normal   Int
+  dlcName  String
+  Task     Task[]
+  coinType String
+  notice   String
 }
 
 model Task {
@@ -73,10 +76,10 @@ model Weapon {
 }
 
 model Ring {
-  name  String  @id
-  rank  Int
-  rare  String
-  level Int
+  name         String @id
+  rank         Int
+  rare         String
+  level        Int
   phyAtk       Int
   magAtk       Int
   crit         String

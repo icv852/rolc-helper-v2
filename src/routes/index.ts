@@ -57,4 +57,13 @@ router.get("/rings", async(ctx: Context) => await handleHttpRequest(ctx, ctx.req
     })
 }))
 
+router.get("/items", async(ctx: Context) =>
+  await handleHttpRequest(ctx, ctx.request.body, z.object({}), () => {
+    return Effect.tryPromise({
+      try: () => ctx.db.item.findMany(),
+      catch: e => new DatabaseError(`Failed to fetch items: ${e}`)
+    })
+  })
+)
+
 export default router

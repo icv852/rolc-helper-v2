@@ -31,6 +31,11 @@ function trimValue(value: string): string {
   return value.trim();
 }
 
+function safeParseInt(value: string): number {
+  const parsed = parseInt(value, 10);
+  return isNaN(parsed) ? 0 : parsed;
+}
+
 export default async function seed(prisma: PrismaClient): Promise<void> {
   try {
     // 1. Import DLC entries from dlc.csv
@@ -51,8 +56,8 @@ export default async function seed(prisma: PrismaClient): Promise<void> {
         where: { name: trimValue(row.name) },
         create: {
           name: trimValue(row.name),
-          rank: parseInt(row.rank, 10),
-          maxLv: parseInt(row.maxLv, 10),
+          rank: safeParseInt(row.rank),
+          maxLv: safeParseInt(row.maxLv),
           dlcName: trimValue(row.dlcName)
         },
         update: {}
@@ -68,9 +73,14 @@ export default async function seed(prisma: PrismaClient): Promise<void> {
         create: {
           name: trimValue(row.name),
           dlcName: trimValue(row.dlcName),
-          copper: parseInt(row.copper, 10),
-          silver: parseInt(row.silver, 10),
-          gold: parseInt(row.gold, 10)
+          copper: safeParseInt(row.copper),
+          silver: safeParseInt(row.silver),
+          gold: safeParseInt(row.gold),
+          shadow: safeParseInt(row.shadow),
+          huang: safeParseInt(row.huang),
+          normal: safeParseInt(row.normal),
+          coinType: row.coinType,
+          notice: row.notice
         },
         update: {}
       });
@@ -84,13 +94,13 @@ export default async function seed(prisma: PrismaClient): Promise<void> {
         where: { name: trimValue(row.name) },
         create: {
           name: trimValue(row.name),
-          rank: parseInt(row.rank, 10),
+          rank: safeParseInt(row.rank),
           rare: row.rare,
           attribute: row.attribute,
           leftHand: parseBoolean(row.leftHand),
-          level: parseInt(row.level),
-          phyAtk: parseInt(row.phyAtk),
-          magAtk: parseInt(row.magAtk),
+          level: safeParseInt(row.level),
+          phyAtk: safeParseInt(row.phyAtk),
+          magAtk: safeParseInt(row.magAtk),
           crit: row.crit,
           skill1: row.skill1,
           skill2: row.skill2,
@@ -114,11 +124,11 @@ export default async function seed(prisma: PrismaClient): Promise<void> {
         where: { name: trimValue(row.name) },
         create: {
           name: trimValue(row.name),
-          rank: parseInt(row.rank, 10),
+          rank: safeParseInt(row.rank),
           rare: row.rare,
-          level: parseInt(row.level),
-          phyAtk: parseInt(row.phyAtk),
-          magAtk: parseInt(row.magAtk),
+          level: safeParseInt(row.level),
+          phyAtk: safeParseInt(row.phyAtk),
+          magAtk: safeParseInt(row.magAtk),
           crit: row.crit,
           skill1: row.skill1,
           skill2: row.skill2,
