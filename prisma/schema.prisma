@@ -92,3 +92,19 @@ model Ring {
   rawMaterials String
   base         String
 }
+
+model Equipment {
+  name         String @id
+  part         String
+  phyDef       Int
+  magDef       Int
+  inscription  String
+  notice       String
+  type         String
+  pro          String
+  rank         Int
+  rare         String
+  level        Int
+  rawMaterials String
+  base         String
+}

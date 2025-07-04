@@ -84,3 +84,20 @@ CREATE TABLE "Ring" (
     "rawMaterials" TEXT NOT NULL,
     "base" TEXT NOT NULL
 );
+
+-- CreateTable
+CREATE TABLE "Equipment" (
+    "name" TEXT NOT NULL PRIMARY KEY,
+    "part" TEXT NOT NULL,
+    "phyDef" INTEGER NOT NULL,
+    "magDef" INTEGER NOT NULL,
+    "inscription" TEXT NOT NULL,
+    "notice" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "pro" TEXT NOT NULL,
+    "rank" INTEGER NOT NULL,
+    "rare" TEXT NOT NULL,
+    "level" INTEGER NOT NULL,
+    "rawMaterials" TEXT NOT NULL,
+    "base" TEXT NOT NULL
+);

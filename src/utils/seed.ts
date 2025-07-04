@@ -36,6 +36,13 @@ function safeParseInt(value: string): number {
   return isNaN(parsed) ? 0 : parsed;
 }
 
+function parseEquipmentInt(value: string): number {
+  if (!value || value.trim() === '' || value.trim() === '?') {
+    return 0;
+  }
+  return safeParseInt(value);
+}
+
 export default async function seed(prisma: PrismaClient): Promise<void> {
   try {
     // 1. Import DLC entries from dlc.csv
@@ -144,7 +151,39 @@ export default async function seed(prisma: PrismaClient): Promise<void> {
     }
     console.log('Ring data imported.');
 
-    // 6. Import Task entries from task.csv
+    // 6. Import Equipment entries from "equipment.csv"
+    const equipmentRows = await readCSV('data/equipment.csv');
+    for (const row of equipmentRows) {
+      await prisma.equipment.upsert({
+        where: { name: trimValue(row.name) },
+        create: {
+          name: trimValue(row.name),
+          part: trimValue(row.part),
+          phyDef: safeParseInt(row.phyDef),
+          magDef: safeParseInt(row.magDef),
+          inscription: row.inscription ? trimValue(row.inscription) : '',
+          // Note: The CSV column order is assumed to be:
+          // name, part, phyDef, magDef, inscription, base, rawMaterials, notice, level, rank, rare, type, pro
+          // In our Equipment model, the field mapping is:
+          // - base comes last, rawMaterials comes before it.
+          // Adjust accordingly if needed.
+          base: row.base ? trimValue(row.base) : '',
+          rawMaterials: row.rawMaterials ? trimValue(row.rawMaterials) : '',
+          notice: row.notice ? trimValue(row.notice) : '',
+          // The CSV ordering for level and rank might be swapped.
+          // According to your Equipment model, we use:
+          level: parseEquipmentInt(row.level),
+          rank: parseEquipmentInt(row.rank),
+          rare: row.rare ? trimValue(row.rare) : '',
+          type: row.type ? trimValue(row.type) : '',
+          pro: row.pro ? trimValue(row.pro) : ''
+        },
+        update: {}
+      });
+    }
+    console.log('Equipment data imported.');
+
+    // 7. Import Task entries from task.csv
     // Note: The CSV file header uses "diffculty" for the difficulty column.
     const taskRows = await readCSV('data/task.csv');
     for (const row of taskRows) {
