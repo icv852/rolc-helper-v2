@@ -25,20 +25,49 @@ router.get("/tasks", async(ctx: Context) => await handleHttpRequest(ctx, ctx.req
             }
         }
         return Effect.tryPromise({
-            try: () => ctx.db.task.findMany({ where: getWhere(time) }),
+            try: () => ctx.db.task.findMany({ 
+                where: getWhere(time),
+                include: {
+                    map: {
+                        select: {
+                            rank: true,
+                            maxLv: true
+                        }
+                    }
+                }
+            }),
             catch: e => new DatabaseError(`Failed to fetch tasks: ${e}`)
         })
     }
 
     if (reward) {
         return Effect.tryPromise({
-            try: () => ctx.db.task.findMany({ where: { itemName: reward as any } }),
+            try: () => ctx.db.task.findMany({ 
+                where: { itemName: reward as any },
+                include: {
+                    map: {
+                        select: {
+                            rank: true,
+                            maxLv: true
+                        }
+                    }
+                }
+            }),
             catch: e => new DatabaseError(`Failed to fetch tasks: ${e}`)
         })
     }
 
     return Effect.tryPromise({
-            try: () => ctx.db.task.findMany(),
+            try: () => ctx.db.task.findMany({
+                include: {
+                    map: {
+                        select: {
+                            rank: true,
+                            maxLv: true
+                        }
+                    }
+                }
+            }),
             catch: e => new DatabaseError(`Failed to fetch tasks: ${e}`)
         })
 }))

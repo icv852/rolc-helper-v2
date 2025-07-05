@@ -39,6 +39,7 @@ CREATE TABLE "Task" (
     "mapName" TEXT NOT NULL,
     "dlcName" TEXT NOT NULL,
     "itemName" TEXT NOT NULL,
+    "notBoss" BOOLEAN NOT NULL,
     CONSTRAINT "Task_mapName_fkey" FOREIGN KEY ("mapName") REFERENCES "Map" ("name") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Task_dlcName_fkey" FOREIGN KEY ("dlcName") REFERENCES "Dlc" ("name") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Task_itemName_fkey" FOREIGN KEY ("itemName") REFERENCES "Item" ("name") ON DELETE RESTRICT ON UPDATE CASCADE

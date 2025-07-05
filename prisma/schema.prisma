@@ -52,6 +52,7 @@ model Task {
   mapName    String
   dlcName    String
   itemName   String
+  notBoss    Boolean
 }
 
 model Weapon {
