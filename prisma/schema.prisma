@@ -53,6 +53,7 @@ model Task {
   dlcName    String
   itemName   String
   notBoss    Boolean
+  notice     String
 }
 
 model Weapon {

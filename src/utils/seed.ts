@@ -222,6 +222,7 @@ export default async function seed(prisma: PrismaClient): Promise<void> {
           nightS: parseBoolean(row.nightS),
           difficulty: trimValue(row.difficulty),
           notBoss: parseBoolean(row.notBoss),
+          notice: trimValue(row.notice),
         },
         update: {}
       });
